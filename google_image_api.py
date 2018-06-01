@@ -4,7 +4,6 @@ from dotenv import load_dotenv
 import urllib.request
 import httplib2
 import json
-import os
 import pickle
 import hashlib
 # import sha3
