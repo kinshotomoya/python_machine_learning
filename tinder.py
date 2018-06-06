@@ -8,9 +8,10 @@ import time
 
 def analysis_face(img):
     local_image_path = "test.jpg"
-    request_img = urllib.request.urlretrieve(img, local_image_path)
     # web上の画像をlocalに保存する
+    request_img = urllib.request.urlretrieve(img, local_image_path)
     face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+    # 画像を読み込ませる
     loaded_img = cv2.imread(f"{local_image_path}")
     gray = cv2.cvtColor(loaded_img, cv2.COLOR_BGR2GRAY)
     faces = face_cascade.detectMultiScale(gray, 1.3, 5)
