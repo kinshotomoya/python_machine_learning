@@ -1,4 +1,5 @@
 if __name__ == '__main__':
+    # ソートされてるのが前提条件
     list = [1, 3, 5, 9, 18, 20]
     low = 0
     high = len(list) - 1
