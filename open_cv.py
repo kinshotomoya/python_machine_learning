@@ -1,16 +1,15 @@
 import cv2
 
-image = "baby.jpg"
+image = "traincascade/pos/pika.jpg"
 # カスケードファイルを読み込む
-face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+face_cascade = cv2.CascadeClassifier('traincascade/cascade/trained_data/cascade.xml')
 # 画像を読み込む
 loaded_img = cv2.imread(f"{image}")
 # （高さ・幅・色数)
-print(loaded_img.shape)
 # 読み込んだ画像を、グレースケール画像として読み込む
 gray = cv2.cvtColor(loaded_img, cv2.COLOR_BGR2GRAY)
 
-faces = face_cascade.detectMultiScale(gray, 1.3, 5)
+faces = face_cascade.detectMultiScale(gray)
 if len(faces) == 0:
     print('画像が認識されません')
 else:
