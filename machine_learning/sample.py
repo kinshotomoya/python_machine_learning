@@ -33,3 +33,21 @@ virginica = iris[iris['Name'] == "Iris-virginica"]
 # 相関係数
 # corr = np.corrcoef(setosa['SepalLength'], setosa['SepalWidth'])
 # print(corr[0, 1])
+
+# 単回帰分析
+from sklearn import linear_model
+LinerRegr = linear_model.LinearRegression()
+X = setosa[['SepalLength']]
+Y = setosa[['SepalWidth']]
+LinerRegr.fit(X, Y)
+plt.scatter(X, Y, color='black')
+px = np.arange(X.min(), X.max(), .01)[:,np.newaxis]
+py = LinerRegr.predict(px)
+plt.plot(px, py, color='blue', linewidth=3)
+plt.xlabel('SepalLength')
+plt.ylabel('SepalWidth')
+plt.show()
+print(LinerRegr.coef_)
+print(LinerRegr.intercept_)
+# 決定係数
+print(LinerRegr.score(X, Y))
