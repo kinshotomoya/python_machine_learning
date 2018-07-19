@@ -66,22 +66,40 @@ virginica = iris[iris['Name'] == "Iris-virginica"]
 
 # ダミー変数
 from sklearn import linear_model
-dummies = pd.get_dummies(iris['Name'])
-iris = pd.concat([iris, dummies], axis=1)
-LinerRegr = linear_model.LinearRegression()
-X = iris[['Iris-virginica', 'Iris-versicolor']]
-Y = iris[['SepalLength']]
-LinerRegr.fit(X, Y)
-# print(LinerRegr.coef_)
+# dummies = pd.get_dummies(iris['Name'])
+# iris = pd.concat([iris, dummies], axis=1)
+# LinerRegr = linear_model.LinearRegression()
+# X = iris[['Iris-virginica', 'Iris-versicolor']]
+# Y = iris[['SepalLength']]
+# LinerRegr.fit(X, Y)
+# # print(LinerRegr.coef_)
 
-# ロジスティック回帰モデル
-usedata = np.logical_or(iris['Name'] == 'Iris-setosa', iris['Name'] == 'Iris-virginica')
-setosa_virginica = iris[usedata]
-X = setosa_virginica[['SepalLength', 'SepalWidth']]
-Y = setosa_virginica['Iris-setosa']
-LogRegr = linear_model.LogisticRegression(C=1.0)
-LogRegr.fit(X, Y)
-# 偏回帰係数を表示
-print(LogRegr.coef_)
-print(LogRegr.intercept_)
-print(pd.crosstab(Y, LogRegr.predict(X)))
+# # ロジスティック回帰モデル
+# usedata = np.logical_or(iris['Name'] == 'Iris-setosa', iris['Name'] == 'Iris-virginica')
+# setosa_virginica = iris[usedata]
+# X = setosa_virginica[['SepalLength', 'SepalWidth']]
+# Y = setosa_virginica['Iris-setosa']
+# LogRegr = linear_model.LogisticRegression(C=1.0)
+# LogRegr.fit(X, Y)
+# # 偏回帰係数を表示 
+# print(LogRegr.coef_)
+# print(LogRegr.intercept_)
+# print(pd.crosstab(Y, LogRegr.predict(X))) 
+
+# 決定木
+# from sklearn import tree
+# from sklearn.externals.six import
+#  StringIO
+# X = iris[['SepalLength', 'SepalWidth', 'PetalLength', 'PetalWidth']]
+# Y = iris[['Name']]
+# treeClf = tree.DecisionTreeClassifier(max_depth=2)
+# treeClf.fit(X, Y)
+# with open('tree.dot', 'w') as f:
+#     f = tree.export_graphviz(treeClf, out_file=f, feature_names=['SepalLength', 'SepalWidth', 'PetalLength', 'PetalWidth'])
+
+# k-means
+from sklearn import cluster
+x = iris[['SepalLength', 'SepalWidth']]
+kmeansCls = cluster.KMeans(n_clusters=3, random_state=71)
+kmeansCls.fit(x)
+print(kmeansCls.predict(x))
