@@ -35,19 +35,41 @@ virginica = iris[iris['Name'] == "Iris-virginica"]
 # print(corr[0, 1])
 
 # 単回帰分析
+# from sklearn import linear_model
+# LinerRegr = linear_model.LinearRegression()
+# X = setosa[['SepalLength']]
+# Y = setosa[['SepalWidth']]
+# LinerRegr.fit(X, Y)
+# plt.scatter(X, Y, color='black')
+# px = np.arange(X.min(), X.max(), .01)[:,np.newaxis]
+# py = LinerRegr.predict(px)
+# plt.plot(px, py, color='blue', linewidth=3)
+# plt.xlabel('SepalLength')
+# plt.ylabel('SepalWidth')
+# plt.show()
+# print(LinerRegr.coef_)
+# print(LinerRegr.intercept_)
+# # 決定係数
+# print(LinerRegr.score(X, Y))
+
+# 重回帰分析
 from sklearn import linear_model
 LinerRegr = linear_model.LinearRegression()
-X = setosa[['SepalLength']]
+X = setosa[['SepalLength', 'PetalLength', 'PetalWidth']]
 Y = setosa[['SepalWidth']]
-LinerRegr.fit(X, Y)
-plt.scatter(X, Y, color='black')
-px = np.arange(X.min(), X.max(), .01)[:,np.newaxis]
-py = LinerRegr.predict(px)
-plt.plot(px, py, color='blue', linewidth=3)
-plt.xlabel('SepalLength')
-plt.ylabel('SepalWidth')
-plt.show()
+LinerRegr.fit(X,Y)
+# 偏回帰係数 β0,β1,β2,β3 の推定値を表示
+# 順番に表示している
 print(LinerRegr.coef_)
-print(LinerRegr.intercept_)
-# 決定係数
+# 決定係数を表示
 print(LinerRegr.score(X, Y))
+
+# ダミー変数
+# from sklearn import linear_model
+# dummies = pd.get_dummies(iris['Name'])
+# iris = pd.concat([iris, dummies], axis=1)
+# LinerRegr = linear_model.LinearRegression()
+# X = iris[['Iris-virginica', 'Iris-versicolor']]
+# Y = iris[['SepalLength']]
+# LinerRegr.fit(X, Y)
+# print(LinerRegr.coef_)
