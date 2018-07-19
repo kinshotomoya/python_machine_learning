@@ -53,23 +53,35 @@ virginica = iris[iris['Name'] == "Iris-virginica"]
 # print(LinerRegr.score(X, Y))
 
 # 重回帰分析
-from sklearn import linear_model
-LinerRegr = linear_model.LinearRegression()
-X = setosa[['SepalLength', 'PetalLength', 'PetalWidth']]
-Y = setosa[['SepalWidth']]
-LinerRegr.fit(X,Y)
-# 偏回帰係数 β0,β1,β2,β3 の推定値を表示
-# 順番に表示している
-print(LinerRegr.coef_)
-# 決定係数を表示
-print(LinerRegr.score(X, Y))
+# from sklearn import linear_model
+# LinerRegr = linear_model.LinearRegression()
+# X = setosa[['SepalLength', 'PetalLength', 'PetalWidth']]
+# Y = setosa[['SepalWidth']]
+# LinerRegr.fit(X,Y)
+# # 偏回帰係数 β0,β1,β2,β3 の推定値を表示
+# # 順番に表示している
+# print(LinerRegr.coef_)
+# # 決定係数を表示
+# print(LinerRegr.score(X, Y))
 
 # ダミー変数
-# from sklearn import linear_model
-# dummies = pd.get_dummies(iris['Name'])
-# iris = pd.concat([iris, dummies], axis=1)
-# LinerRegr = linear_model.LinearRegression()
-# X = iris[['Iris-virginica', 'Iris-versicolor']]
-# Y = iris[['SepalLength']]
-# LinerRegr.fit(X, Y)
+from sklearn import linear_model
+dummies = pd.get_dummies(iris['Name'])
+iris = pd.concat([iris, dummies], axis=1)
+LinerRegr = linear_model.LinearRegression()
+X = iris[['Iris-virginica', 'Iris-versicolor']]
+Y = iris[['SepalLength']]
+LinerRegr.fit(X, Y)
 # print(LinerRegr.coef_)
+
+# ロジスティック回帰モデル
+usedata = np.logical_or(iris['Name'] == 'Iris-setosa', iris['Name'] == 'Iris-virginica')
+setosa_virginica = iris[usedata]
+X = setosa_virginica[['SepalLength', 'SepalWidth']]
+Y = setosa_virginica['Iris-setosa']
+LogRegr = linear_model.LogisticRegression(C=1.0)
+LogRegr.fit(X, Y)
+# 偏回帰係数を表示
+print(LogRegr.coef_)
+print(LogRegr.intercept_)
+print(pd.crosstab(Y, LogRegr.predict(X)))
