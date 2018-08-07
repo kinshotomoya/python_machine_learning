@@ -1,29 +1,33 @@
-# Google検索・スクレイピング
 import requests
 import webbrowser
+import time
 from bs4 import BeautifulSoup
-from googlesearch import search
+from selenium import webdriver  #seleniumは、ウェブブラウザを操作するソフトウェア。画面をスクロールなどの操作ができる
 
-def google_search(word, limit):
-    print(word)
-    target_web_urls = search(word, lang='ja', stop=limit)
-    for web_url in target_web_urls:
-        print(web_url)
-        try:
-            get_image(web_url)
-        except:
-            print('そのURlからは画像は取得できません')
 
-def get_image(web_url):
-    response = requests.get(web_url)
-    soup = BeautifulSoup(response.text, 'html.parser')
-    images = soup.find_all("img")
-    i = 0
-    for image in images:
-        i += 1
-        if i > 11:
-            break
-        image_url = image.get('src')
-        webbrowser.open(image_url)
+host_url = 'https://newspicks.com/'
 
-google_search(' 画像' + ' -naver -twitter', 10)
+
+def get_url_array(host_url):
+    driver = webdriver.PhantomJS() # PhantomJSをドライバーとして扱うことによって、JSを考慮してウェブページを扱える
+    driver.get(host_url)
+    html = driver.page_source.encode('utf-8')
+    soup = BeautifulSoup(html, 'html.parser')
+    articles = soup.find_all("a", attrs={"classs": "user-selected-link"}) #NewsPicksでは、このクラス名が記事リンクになっている
+    urls = [get_url(article) for article in articles]
+    uniq_urls = list(set(urls))
+    print(uniq_urls)
+    return uniq_urls
+
+def get_url(article):
+    href = article.get('href')
+    url = f"{host_url}{href}"
+    return url
+
+def display_url(urls):
+    for url in urls:
+        webbrowser.open(url)
+
+
+urls = get_url_array(host_url)
+display_url(urls)

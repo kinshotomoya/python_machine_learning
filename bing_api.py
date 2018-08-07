@@ -25,6 +25,7 @@ def get_params(searchTerm, required_image_num):
 def get_images_url_array(search_url, headers, params):
     response = requests.get(search_url, headers=headers, params=params)
     search_results = response.json()
+    print(search_results)
     return [image['thumbnailUrl'] for image in search_results['value']]
 
 
